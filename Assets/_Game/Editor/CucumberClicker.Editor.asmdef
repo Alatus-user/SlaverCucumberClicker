@@ -1,0 +1,13 @@
+{
+    "name": "CucumberClicker.Editor",
+    "rootNamespace": "CucumberClicker.EditorTools",
+    "references": [
+        "CucumberClicker",
+        "Unity.TextMeshPro",
+        "UnityEngine.UI",
+        "Unity.InputSystem"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ]
+}

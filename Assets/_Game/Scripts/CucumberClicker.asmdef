@@ -1,0 +1,10 @@
+{
+    "name": "CucumberClicker",
+    "rootNamespace": "CucumberClicker",
+    "references": [
+        "Unity.TextMeshPro",
+        "UnityEngine.UI",
+        "Unity.InputSystem"
+    ],
+    "autoReferenced": true
+}
