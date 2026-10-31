@@ -18,10 +18,10 @@ MonoBehaviour:
   section: 0
   effect: 1
   effectPerLevel: 2
-  baseCost: 5000
-  growth: 10
+  baseCost: 100000
+  growth: 25
   maxLevel: 10
   unlockCondition:
     type: 1
-    amount: 2500
+    amount: 50000
     recipeId: 

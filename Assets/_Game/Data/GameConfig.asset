@@ -17,6 +17,7 @@ MonoBehaviour:
   rawCucumberSellPrice: 1
   firstRawSaleAmount: 1
   rawSaleGrowth: 2
+  pickleValueGrowth: 1.15
   startingJars: 1
   baseJarCapacity: 5
   recipes:

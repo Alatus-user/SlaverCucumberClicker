@@ -43,5 +43,9 @@ namespace CucumberClicker
         public double Cost => CostFormula.Cost(BaseCost, Growth, Level);
 
         public void AddLevel() => saved.level++;
+
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
+        public void SetLevel(int level) => saved.level = level;
+#endif
     }
 }

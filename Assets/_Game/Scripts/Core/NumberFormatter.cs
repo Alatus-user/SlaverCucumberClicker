@@ -40,6 +40,10 @@ namespace CucumberClicker
             return "+" + number + "/s";
         }
 
+        /// <summary>Small multipliers like "1.15" keep two decimals, because Format would show them as "1".</summary>
+        public static string FormatMultiplier(double value) =>
+            value < 1000 ? (Math.Floor(value * 100 + Epsilon) / 100).ToString("0.##", Invariant) : Format(value);
+
         /// <summary>Remaining time: "45s", "2m 13s", "3h 05m", "1d 02h".</summary>
         public static string FormatDuration(double seconds)
         {

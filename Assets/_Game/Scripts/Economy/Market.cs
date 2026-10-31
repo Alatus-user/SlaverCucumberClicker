@@ -23,8 +23,8 @@ namespace CucumberClicker
         /// <summary>Starts at 1 and rises with every raw sale.</summary>
         public int MarketLevel => state.rawSales + 1;
 
-        /// <summary>Multiplier on pickle value: growth^(market level).</summary>
-        public double PickleMultiplier => Math.Pow(config.pickleValueGrowth, MarketLevel);
+        /// <summary>Multiplier on pickle value: growth^(market level − 1), so level 1 pays the recipe's value.</summary>
+        public double PickleMultiplier => CostFormula.Cost(1, config.pickleValueGrowth, MarketLevel - 1);
 
         /// <summary>Size of the next raw sale: lot(level) = first × growth^(level − 1).</summary>
         public double NextRawSaleAmount =>

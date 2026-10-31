@@ -17,8 +17,8 @@ namespace CucumberClicker
         [Min(1)] public double firstRawSaleAmount = 1;
         [Tooltip("Each raw sale needs this many times more cucumbers than the last.")]
         [Min(1)] public double rawSaleGrowth = 2;
-        [Tooltip("Pickles sell for recipe value × this ^ market level.")]
-        [Min(1)] public double pickleValueGrowth = 4;
+        [Tooltip("Pickles sell for recipe value × this ^ (market level − 1).")]
+        [Min(1)] public double pickleValueGrowth = 1.15;
 
         [Header("Pickling")]
         [Min(1)] public int startingJars = 1;

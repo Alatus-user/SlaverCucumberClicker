@@ -52,7 +52,7 @@ namespace CucumberClicker.UI
             if (value != shownValue) sellEverythingValue.text = shownValue = value;
 
             string info = Strings.RawCucumbersInfo(market.MarketLevel.ToString(),
-                NumberFormatter.Format(market.PickleMultiplier), NumberFormatter.Format(owned));
+                NumberFormatter.FormatMultiplier(market.PickleMultiplier), NumberFormatter.Format(owned));
             if (info != shownInfo) rawInfo.text = shownInfo = info;
 
             RefreshPickleRows();

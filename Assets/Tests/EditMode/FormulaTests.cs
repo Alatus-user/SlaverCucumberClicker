@@ -1,6 +1,8 @@
+using System;
 using CucumberClicker;
 using NUnit.Framework;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace CucumberClicker.Tests
 {
@@ -25,6 +27,14 @@ namespace CucumberClicker.Tests
         [TestCase(20, "+20/s")]
         [TestCase(1500, "+1.50K/s")]
         public void FormatRate(double value, string expected) => Assert.AreEqual(expected, NumberFormatter.FormatRate(value));
+
+        [TestCase(1, "1")]
+        [TestCase(1.15, "1.15")]
+        [TestCase(1.5209, "1.52")]
+        [TestCase(28.6, "28.6")]
+        [TestCase(12500, "12.5K")]
+        public void FormatMultiplier(double value, string expected) =>
+            Assert.AreEqual(expected, NumberFormatter.FormatMultiplier(value));
 
         [TestCase(45, "45s")]
         [TestCase(133, "2m 13s")]
@@ -135,27 +145,36 @@ namespace CucumberClicker.Tests
         }
 
         [Test]
-        public void PickleValueIsFourToTheMarketLevel()
+        public void PickleValueGrowsWithEachMarketLevelAboveOne()
         {
+            config.pickleValueGrowth = 2;
             state.pickles.Add(new PickleStack { recipeId = "quick_brine", count = 5, totalValue = 250 });
-            Assert.AreEqual(4, market.PickleMultiplier);
-            Assert.AreEqual(1000, market.ValueOfAllPickles);
+            Assert.AreEqual(1, market.PickleMultiplier);
+            Assert.AreEqual(250, market.ValueOfAllPickles);
 
             wallet.AddCucumbers(3);
             market.SellRaw();
-            Assert.AreEqual(16, market.PickleMultiplier);
-            Assert.AreEqual(4000, market.ValueOfAllPickles);
+            Assert.AreEqual(2, market.PickleMultiplier);
+            Assert.AreEqual(500, market.ValueOfAllPickles);
 
             market.SellRaw();
-            Assert.AreEqual(64, market.PickleMultiplier);
-            Assert.AreEqual(16000, market.SellPickles("quick_brine"));
+            Assert.AreEqual(4, market.PickleMultiplier);
+            Assert.AreEqual(1000, market.SellPickles("quick_brine"));
+        }
+
+        [Test]
+        public void DefaultPickleGrowthIsGentle()
+        {
+            state.rawSales = 9;
+            Assert.AreEqual(Math.Pow(1.15, 9), market.PickleMultiplier, 1e-9);
+            Assert.Less(market.PickleMultiplier, 4);
         }
 
         [Test]
         public void HagglingStacksWithTheMarketLevel()
         {
             market.SellPriceMultiplier = 1.5;
-            Assert.AreEqual(60, market.PickleSellValue(10));
+            Assert.AreEqual(15, market.PickleSellValue(10));
         }
 
         [Test]
@@ -165,7 +184,7 @@ namespace CucumberClicker.Tests
             wallet.AddCucumbers(1);
 
             double shown = market.ValueOfEverything;
-            Assert.AreEqual(1001, shown);
+            Assert.AreEqual(251, shown);
             Assert.AreEqual(shown, market.SellEverything());
             Assert.AreEqual(2, market.MarketLevel);
         }

@@ -19,6 +19,6 @@ MonoBehaviour:
   jarTint: {r: 0.87, g: 0.25, b: 0.18, a: 1}
   unlockCondition:
     type: 1
-    amount: 50000
+    amount: 1000000
     recipeId: 
-  unlockCost: 25000
+  unlockCost: 500000

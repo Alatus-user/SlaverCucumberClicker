@@ -109,6 +109,16 @@ namespace CucumberClicker
             return true;
         }
 
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
+        /// <summary>Debug panel only: sets a level for free, within the item's range.</summary>
+        public void SetLevel(ShopItem item, int level)
+        {
+            item.SetLevel(Math.Max(0, Math.Min(level, item.MaxLevel)));
+            RefreshUnlockedRecipes();
+            Purchased?.Invoke(item);
+        }
+#endif
+
         /// <summary>Announces items whose unlock condition has just been met.</summary>
         public void CheckUnlocks()
         {

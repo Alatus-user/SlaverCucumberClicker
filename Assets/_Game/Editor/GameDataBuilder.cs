@@ -22,12 +22,12 @@ namespace CucumberClicker.EditorTools
             config.recipes = new[]
             {
                 Recipe("quick_brine", "Quick Brine", 180, 50, new Color(0.6f, 0.78f, 0.22f), 0, 0),
-                Recipe("garlic_dill", "Garlic Dill", 600, 125, new Color(0.35f, 0.62f, 0.3f), 1_000, 500),
-                Recipe("bread_butter", "Bread & Butter", 1800, 300, new Color(0.93f, 0.76f, 0.3f), 10_000, 5_000),
-                Recipe("spicy_chili", "Spicy Chili", 3600, 500, new Color(0.87f, 0.25f, 0.18f), 50_000, 25_000),
-                Recipe("kosher_sour", "Kosher Sour", 14400, 1500, new Color(0.45f, 0.55f, 0.2f), 500_000, 200_000),
-                Recipe("cucumber_kimchi", "Cucumber Kimchi", 28800, 2750, new Color(0.9f, 0.42f, 0.2f), 2_500_000, 1_000_000),
-                Recipe("golden_royal", "Golden Royal Pickle", 86400, 7500, new Color(0.95f, 0.72f, 0.1f), 25_000_000, 10_000_000),
+                Recipe("garlic_dill", "Garlic Dill", 600, 125, new Color(0.35f, 0.62f, 0.3f), 30_000, 15_000),
+                Recipe("bread_butter", "Bread & Butter", 1800, 300, new Color(0.93f, 0.76f, 0.3f), 200_000, 100_000),
+                Recipe("spicy_chili", "Spicy Chili", 3600, 500, new Color(0.87f, 0.25f, 0.18f), 1_000_000, 500_000),
+                Recipe("kosher_sour", "Kosher Sour", 14400, 1500, new Color(0.45f, 0.55f, 0.2f), 10_000_000, 4_000_000),
+                Recipe("cucumber_kimchi", "Cucumber Kimchi", 28800, 2750, new Color(0.9f, 0.42f, 0.2f), 50_000_000, 20_000_000),
+                Recipe("golden_royal", "Golden Royal Pickle", 86400, 7500, new Color(0.95f, 0.72f, 0.1f), 500_000_000, 200_000_000),
             };
 
             config.upgrades = new[]
@@ -35,13 +35,13 @@ namespace CucumberClicker.EditorTools
                 Upgrade("tap_power", "Stronger Hands", "+1 cucumber per tap", ShopSection.Tapping,
                     UpgradeEffect.TapPower, 1, 15, 1.5, 100, 0),
                 Upgrade("tap_multiplier", "Golden Gloves", "x2 tap power", ShopSection.Tapping,
-                    UpgradeEffect.TapMultiplier, 2, 5_000, 10, 10, 2_500),
+                    UpgradeEffect.TapMultiplier, 2, 100_000, 25, 10, 50_000),
                 Upgrade("jar_count", "Extra Jar", "+1 jar", ShopSection.Jars,
                     UpgradeEffect.JarCount, 1, 100, 4, 7, 0),
                 Upgrade("jar_capacity", "Bigger Jars", "+5 capacity for every jar", ShopSection.Jars,
                     UpgradeEffect.JarCapacity, 5, 50, 1.8, 40, 0),
                 Upgrade("market_haggle", "Haggling", "+5% sell price on everything", ShopSection.Market,
-                    UpgradeEffect.MarketHaggle, 0.05, 2_000, 2.2, 20, 1_000),
+                    UpgradeEffect.MarketHaggle, 0.05, 40_000, 2.2, 20, 20_000),
             };
 
             EditorUtility.SetDirty(config);
