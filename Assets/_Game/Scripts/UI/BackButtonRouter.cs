@@ -7,6 +7,7 @@ namespace CucumberClicker.UI
     public class BackButtonRouter : MonoBehaviour
     {
         [SerializeField] private ConfirmDialog dialog;
+        [SerializeField] private RecipePicker recipePicker;
         [SerializeField] private DrawerController drawer;
 
         private void Update()
@@ -20,6 +21,11 @@ namespace CucumberClicker.UI
             if (dialog.IsOpen)
             {
                 dialog.Close();
+                return;
+            }
+            if (recipePicker.IsOpen)
+            {
+                recipePicker.Close();
                 return;
             }
             if (drawer.HandleBack()) return;

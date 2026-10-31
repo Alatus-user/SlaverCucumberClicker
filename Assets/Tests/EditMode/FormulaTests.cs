@@ -52,6 +52,15 @@ namespace CucumberClicker.Tests
             Assert.AreEqual(4, CostFormula.TapPower(1, 3, 0));
             Assert.AreEqual(16, CostFormula.TapPower(1, 3, 2));
         }
+
+        [Test]
+        public void RecipeDurationAndValueFormulas()
+        {
+            Assert.AreEqual(180, CostFormula.RecipeDuration(180, 0, 0.05), 1e-9);
+            Assert.AreEqual(90, CostFormula.RecipeDuration(180, 10, 0.05), 1e-9);
+            Assert.AreEqual(10, CostFormula.RecipeValue(10, 0, 0.1), 1e-9);
+            Assert.AreEqual(35, CostFormula.RecipeValue(10, 25, 0.1), 1e-9);
+        }
     }
 
     public class EconomyTests
@@ -67,36 +76,118 @@ namespace CucumberClicker.Tests
             config = GameConfig.CreateDefault();
             state = new GameState();
             wallet = new Wallet(state);
-            market = new Market(wallet, config);
+            market = new Market(state, wallet, config);
         }
 
         [TearDown]
         public void TearDown() => Object.DestroyImmediate(config);
 
         [Test]
-        public void FiveRawCucumbersSellForFiveCoins()
+        public void RawLotsDoubleWithEverySale()
         {
-            wallet.AddCucumbers(5);
-            Assert.AreEqual(5, market.SellAllRaw());
-            Assert.AreEqual(5, wallet.Coins);
+            wallet.AddCucumbers(7);
+
+            Assert.AreEqual(1, market.SellRaw());
+            Assert.AreEqual(2, market.SellRaw());
+            Assert.AreEqual(4, market.NextRawSaleAmount);
+            Assert.AreEqual(4, market.SellRaw());
+
+            Assert.AreEqual(7, wallet.Coins);
             Assert.AreEqual(0, wallet.Cucumbers);
-            Assert.AreEqual(5, state.stats.lifetimeCoins);
+            Assert.AreEqual(7, state.stats.lifetimeCoins);
+            Assert.AreEqual(8, market.NextRawSaleAmount);
         }
 
         [Test]
-        public void SellingMoreThanOwnedSellsWhatYouHave()
+        public void CannotSellLessThanTheNextLot()
+        {
+            wallet.AddCucumbers(4);
+            market.SellRaw(); // 1
+            market.SellRaw(); // 2
+
+            Assert.IsFalse(market.CanSellRaw);
+            Assert.AreEqual(0, market.NextRawSaleValue);
+            Assert.AreEqual(0, market.SellRaw());
+            Assert.AreEqual(1, wallet.Cucumbers);
+            Assert.AreEqual(4, market.NextRawSaleAmount, "a failed sale must not grow the next lot");
+        }
+
+        [Test]
+        public void SaleOnlyTakesTheLotAndKeepsTheRest()
+        {
+            wallet.AddCucumbers(100);
+            Assert.AreEqual(1, market.SellRaw());
+            Assert.AreEqual(99, wallet.Cucumbers);
+        }
+
+        [Test]
+        public void MarketLevelRisesOnlyOnASuccessfulSale()
+        {
+            Assert.AreEqual(1, market.MarketLevel);
+            market.SellRaw();
+            Assert.AreEqual(1, market.MarketLevel, "nothing was sold");
+
+            wallet.AddCucumbers(3);
+            market.SellRaw();
+            Assert.AreEqual(2, market.MarketLevel);
+            market.SellRaw();
+            Assert.AreEqual(3, market.MarketLevel);
+        }
+
+        [Test]
+        public void PickleValueIsFourToTheMarketLevel()
+        {
+            state.pickles.Add(new PickleStack { recipeId = "quick_brine", count = 5, totalValue = 250 });
+            Assert.AreEqual(4, market.PickleMultiplier);
+            Assert.AreEqual(1000, market.ValueOfAllPickles);
+
+            wallet.AddCucumbers(3);
+            market.SellRaw();
+            Assert.AreEqual(16, market.PickleMultiplier);
+            Assert.AreEqual(4000, market.ValueOfAllPickles);
+
+            market.SellRaw();
+            Assert.AreEqual(64, market.PickleMultiplier);
+            Assert.AreEqual(16000, market.SellPickles("quick_brine"));
+        }
+
+        [Test]
+        public void HagglingStacksWithTheMarketLevel()
+        {
+            market.SellPriceMultiplier = 1.5;
+            Assert.AreEqual(60, market.PickleSellValue(10));
+        }
+
+        [Test]
+        public void SellEverythingPaysExactlyWhatItShows()
+        {
+            state.pickles.Add(new PickleStack { recipeId = "quick_brine", count = 5, totalValue = 250 });
+            wallet.AddCucumbers(1);
+
+            double shown = market.ValueOfEverything;
+            Assert.AreEqual(1001, shown);
+            Assert.AreEqual(shown, market.SellEverything());
+            Assert.AreEqual(2, market.MarketLevel);
+        }
+
+        [Test]
+        public void HagglingRaisesRawPriceButNotLotSize()
         {
             wallet.AddCucumbers(3);
-            Assert.AreEqual(3, market.SellRaw(10));
-            Assert.AreEqual(0, market.SellRaw(1));
+            market.SellRaw();
+            market.SellPriceMultiplier = 1.5;
+
+            Assert.AreEqual(2, market.NextRawSaleAmount);
+            Assert.AreEqual(3, market.SellRaw());
         }
 
         [Test]
         public void FractionalCucumbersAreNotSold()
         {
-            wallet.AddCucumbers(2.7);
-            Assert.AreEqual(2, market.SellAllRaw());
+            wallet.AddCucumbers(1.7);
+            Assert.AreEqual(1, market.SellRaw());
             Assert.AreEqual(0.7, wallet.Cucumbers, 1e-9);
+            Assert.AreEqual(0, market.SellRaw());
         }
 
         [Test]

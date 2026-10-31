@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e7dbc222970e096fb917ad1efa2ff0b, type: 3}
+  m_Name: market_haggle
+  m_EditorClassIdentifier: CucumberClicker::CucumberClicker.UpgradeData
+  id: market_haggle
+  displayName: Haggling
+  description: +5% sell price on everything
+  section: 3
+  effect: 4
+  effectPerLevel: 0.05
+  baseCost: 2000
+  growth: 2.2
+  maxLevel: 20
+  unlockCondition:
+    type: 1
+    amount: 1000
+    recipeId: 

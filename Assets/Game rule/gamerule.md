@@ -15,14 +15,14 @@ Read this whole file before writing code. Follow the build phases in order and c
 
 ```
 Tap cucumber ──► Cucumbers ──┬──► Sell raw at Market ──────────────► Coins
-                             └──► Put in Jar (recipe, real time) ──► Pickles ──► Sell ──► Coins (×10 … ×1500)
+                             └──► Put in Jar (recipe, real time) ──► Pickles ──► Sell ──► Coins (×50 … ×7500)
 Coins ──► Upgrades (tap power, jars, recipes, producers) ──► more cucumbers / better pickles
 ```
 
 - **Tap**: tapping the big cucumber in the center of the Farm screen gives `+tapPower` cucumbers (starts at 1).
-- **Sell raw**: 1 cucumber = 1 coin (base).
+- **Sell raw**: 1 cucumber = 1 coin (base), sold in lots that double with every sale: 1, 2, 4, 8, …
 - **Pickle**: choose a recipe, load cucumbers into an empty jar, wait real time, collect pickles, sell them.
-  - Reference example from the designer: 5 cucumbers raw = 5 coins; 5 cucumbers in Quick Brine for 3 minutes = 50 coins.
+  - Reference example from the designer: 5 cucumbers raw = 5 coins; 5 cucumbers in Quick Brine for 3 minutes = 1,000 coins at market level 1 (250 × 4^1).
 - **Upgrade**: spend coins on tap power, more/bigger jars, faster/better recipes, new recipes, and auto-producers.
 - **Unlock**: new recipes, upgrades and producers appear as the player progresses (based on lifetime stats).
 
@@ -72,7 +72,10 @@ Keep game logic in plain C# classes that do not depend on `MonoBehaviour` where 
 - Support multi-touch (each finger counts) but cap at 20 taps/second to stop auto-clicker abuse.
 
 ### 3.2 Market
-- Sell raw cucumbers: buttons **Sell 1 / Sell 10 / Sell All**.
+- **Market level** starts at 1 and rises by 1 with every raw sale (`marketLevel = rawSales + 1`). `rawSales` is part of the save.
+- Sell raw cucumbers: one **Sell N** button. Each sale is exactly one lot, `lot = firstRawSaleAmount × rawSaleGrowth^(marketLevel − 1)` (defaults 1 and 2), so the sales go 1, 2, 4, 8, …. The button is grey until the player owns the whole lot. Extra cucumbers are kept.
+- Pickles sell for `batch value × Haggling × pickleValueGrowth^marketLevel` (default 4), using the market level at the moment of sale. Prices shown in the jar picker and the Upgrades tab use the current level.
+- **Sell Everything** sells all pickles at the current level, then one raw lot if owned.
 - Sell pickles: one row per pickle type the player owns, showing count and value each, with **Sell All**.
 - Show the coins earned as a floating number and update the wallet instantly.
 
@@ -91,13 +94,13 @@ Value = coins per cucumber put in. Unlock = lifetime coins earned that makes the
 
 | id | Name | Time | Value / cucumber | Visible at lifetime coins | Unlock cost |
 |---|---|---|---|---|---|
-| quick_brine | Quick Brine | 3 min | 10 | start (owned) | 0 |
-| garlic_dill | Garlic Dill | 10 min | 25 | 1,000 | 500 |
-| bread_butter | Bread & Butter | 30 min | 60 | 10,000 | 5,000 |
-| spicy_chili | Spicy Chili | 1 h | 100 | 50,000 | 25,000 |
-| kosher_sour | Kosher Sour | 4 h | 300 | 500,000 | 200,000 |
-| cucumber_kimchi | Cucumber Kimchi | 8 h | 550 | 2,500,000 | 1,000,000 |
-| golden_royal | Golden Royal Pickle | 24 h | 1,500 | 25,000,000 | 10,000,000 |
+| quick_brine | Quick Brine | 3 min | 50 | start (owned) | 0 |
+| garlic_dill | Garlic Dill | 10 min | 125 | 1,000 | 500 |
+| bread_butter | Bread & Butter | 30 min | 300 | 10,000 | 5,000 |
+| spicy_chili | Spicy Chili | 1 h | 500 | 50,000 | 25,000 |
+| kosher_sour | Kosher Sour | 4 h | 1,500 | 500,000 | 200,000 |
+| cucumber_kimchi | Cucumber Kimchi | 8 h | 2,750 | 2,500,000 | 1,000,000 |
+| golden_royal | Golden Royal Pickle | 24 h | 7,500 | 25,000,000 | 10,000,000 |
 
 `RecipeData` fields: `id, displayName, description, icon, baseDurationSeconds, baseValuePerCucumber, unlockCondition, unlockCost, jarTint (Color)`.
 
@@ -238,7 +241,7 @@ Work in this order. Finish and test each phase before the next.
 ## 10. Acceptance checklist
 
 - [ ] Tapping the cucumber adds exactly `tapPower` cucumbers and shows feedback.
-- [ ] 5 cucumbers sold raw = 5 coins; 5 cucumbers in Quick Brine for 3 min then sold = 50 coins (no upgrades).
+- [ ] Raw sales take exactly 1, 2, 4, … cucumbers at 1 coin each; 5 cucumbers in Quick Brine for 3 min then sold at market level 1 = 1,000 coins (no upgrades).
 - [ ] A jar started, app closed for longer than the recipe time, and reopened shows Ready.
 - [ ] Moving the device clock backwards does not finish jars early or grant income.
 - [ ] Upgrades bought mid-batch do not change that batch.

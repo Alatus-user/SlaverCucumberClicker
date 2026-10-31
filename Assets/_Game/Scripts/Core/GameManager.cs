@@ -17,9 +17,11 @@ namespace CucumberClicker
         public GameState State { get; private set; }
         public Wallet Wallet { get; private set; }
         public Market Market { get; private set; }
+        public PicklingManager Pickling { get; private set; }
+        public UpgradeManager Upgrades { get; private set; }
 
-        /// <summary>Cucumbers per tap. Upgrade levels arrive in Phase 4.</summary>
-        public double TapPower => CostFormula.TapPower(config.baseTapPower, 0, 0);
+        public double TapPower => CostFormula.TapPower(config.baseTapPower,
+            Upgrades.LevelOf(UpgradeEffect.TapPower), Upgrades.LevelOf(UpgradeEffect.TapMultiplier));
 
         /// <summary>Producer output. Producers arrive in Phase 5.</summary>
         public double CucumbersPerSecond => 0;
@@ -48,7 +50,11 @@ namespace CucumberClicker
             State = new GameState();
             State.stats.firstPlayUtcTicks = TimeService.UtcNowTicks;
             Wallet = new Wallet(State);
-            Market = new Market(Wallet, config);
+            Market = new Market(State, Wallet, config);
+            Upgrades = new UpgradeManager(State, Wallet, config);
+            Pickling = new PicklingManager(State, Wallet, config, Upgrades);
+            Upgrades.Purchased += _ => ApplyUpgrades();
+            ApplyUpgrades();
             tapLimiter = new TapLimiter(config.maxTapsPerSecond);
         }
 
@@ -61,6 +67,13 @@ namespace CucumberClicker
         {
             State.stats.totalPlayTimeSeconds += Time.unscaledDeltaTime;
             if (HasProducers) Wallet.AddCucumbers(CucumbersPerSecond * Time.deltaTime);
+            Upgrades.CheckUnlocks();
+        }
+
+        private void ApplyUpgrades()
+        {
+            Market.SellPriceMultiplier = 1 + Upgrades.Bonus(UpgradeEffect.MarketHaggle);
+            Pickling.SyncJarCount();
         }
 
         /// <summary>Registers one tap. Returns cucumbers gained, or 0 if the tap was rate-limited.</summary>

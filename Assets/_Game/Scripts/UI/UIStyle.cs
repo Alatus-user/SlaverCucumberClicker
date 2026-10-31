@@ -10,6 +10,7 @@ namespace CucumberClicker.UI
         public static readonly Color Unaffordable = new Color(0.66f, 0.66f, 0.66f);
         public static readonly Color Highlight = new Color(1f, 0.66f, 0.15f);
         public static readonly Color CoinText = new Color(0.85f, 0.6f, 0.05f);
+        public static readonly Color Silhouette = new Color(0.25f, 0.25f, 0.25f);
 
         /// <summary>Green and clickable, or grey and disabled. Buttons use no color transition.</summary>
         public static void SetAvailable(Button button, bool available, Color? availableColor = null)

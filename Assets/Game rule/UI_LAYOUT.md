@@ -117,7 +117,7 @@ The game starts in **Collapsed**.
 Each tab's content is a vertical `ScrollRect` below the header. Content details come from `SKILL.md`:
 
 - **Pickle** — jar grid (2 columns) as in `SKILL.md` 3.3. Tapping an empty jar opens the recipe picker as a popup above the drawer (not a new screen). Put a **Collect All** button at the top when 2+ jars are Ready.
-- **Market** — Sell 1 / Sell 10 / Sell All raw cucumbers, then one row per pickle type with **Sell All**. Put a big **Sell Everything** button at the top.
+- **Market** — one **Sell N** button for the next raw lot (1, 2, 4, 8, …), then one row per pickle type with **Sell All**. Put a big **Sell Everything** button at the top.
 - **Upgrades** — sections: Tapping, Jars, Recipes, Market (`SKILL.md` 3.5).
 - **Workers** — producer cards (`SKILL.md` 3.6).
 

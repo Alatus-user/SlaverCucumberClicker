@@ -15,5 +15,32 @@ MonoBehaviour:
   baseTapPower: 1
   maxTapsPerSecond: 20
   rawCucumberSellPrice: 1
+  firstRawSaleAmount: 1
+  rawSaleGrowth: 2
+  startingJars: 1
+  baseJarCapacity: 5
+  recipes:
+  - {fileID: 11400000, guid: e4d15e5d2565d269db43e3aef4a14749, type: 2}
+  - {fileID: 11400000, guid: 8619da1f66be195f393d30f4cd05dc80, type: 2}
+  - {fileID: 11400000, guid: a0be6decaf545b902bd4a8a67129c528, type: 2}
+  - {fileID: 11400000, guid: b3a50a24e40534223af35eb01b095e1d, type: 2}
+  - {fileID: 11400000, guid: 0f5a94b89163e8fd988e65086b3f9056, type: 2}
+  - {fileID: 11400000, guid: 8da96f67ebeeae918804804f607028d8, type: 2}
+  - {fileID: 11400000, guid: 9e35f046240d5b87695ff4bbbc4379be, type: 2}
+  upgrades:
+  - {fileID: 11400000, guid: f676299e409f310f1a2e47c5efd78461, type: 2}
+  - {fileID: 11400000, guid: f033b7761ead63e80933428f565cc4b2, type: 2}
+  - {fileID: 11400000, guid: e23f12a3ea303de61a72f25d8100c0ef, type: 2}
+  - {fileID: 11400000, guid: a611b465c24f8e08784508a83c19be7d, type: 2}
+  - {fileID: 11400000, guid: 9dc407672016342c5bff7f97191c0083, type: 2}
+  teaserThreshold: 0.5
+  recipeUpgradeMinCost: 50
+  recipeUpgradeCostFactor: 0.5
+  qualityPerLevel: 0.1
+  qualityGrowth: 1.6
+  qualityMaxLevel: 25
+  speedPerLevel: 0.05
+  speedGrowth: 2
+  speedMaxLevel: 10
   offlineEfficiency: 0.5
   offlineCapHours: 8

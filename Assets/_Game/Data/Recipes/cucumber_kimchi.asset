@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7af2d63e00851fa53ac29d9ff4ae057a, type: 3}
+  m_Name: cucumber_kimchi
+  m_EditorClassIdentifier: CucumberClicker::CucumberClicker.RecipeData
+  id: cucumber_kimchi
+  displayName: Cucumber Kimchi
+  baseDurationSeconds: 28800
+  baseValuePerCucumber: 2750
+  jarTint: {r: 0.9, g: 0.42, b: 0.2, a: 1}
+  unlockCondition:
+    type: 1
+    amount: 2500000
+    recipeId: 
+  unlockCost: 1000000
