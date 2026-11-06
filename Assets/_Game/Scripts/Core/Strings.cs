@@ -62,6 +62,16 @@ namespace CucumberClicker
         public static string NewUpgrade(string name) => $"New upgrade: {name}!";
         public static string JarBuyCost(string cost) => $"{cost} coins";
 
+        // Notifications
+        public const string NotificationChannelName = "Pickles Ready";
+        public const string NotificationChannelDescription = "Tells you when a jar has finished fermenting.";
+        public const string JarReadyTitle = "Your pickles are ready!";
+        public static string JarReadyText(string amount, string recipe) => $"{amount} {recipe} pickles finished fermenting. Come collect them!";
+        public static string JarsReadyText(int jars) => $"{jars} jars finished fermenting. Come collect them!";
+        public const string PicklesFallbackName = "tasty";
+        public const string TestNotificationTitle = "Test notification";
+        public const string TestNotificationText = "Notifications work! Your pickles will call you when they're ready.";
+
         // Placeholders for later phases
         public const string ComingSoon = "Coming soon!";
         public const string SettingsComingSoon = "Settings are coming soon!";

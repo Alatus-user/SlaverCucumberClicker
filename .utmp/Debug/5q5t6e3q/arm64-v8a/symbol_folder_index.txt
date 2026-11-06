@@ -1,0 +1,1 @@
+/home/thirasak/Unity/Mobile/My project (2)/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/Debug/5q5t6e3q/obj/arm64-v8a

@@ -1,4 +1,4 @@
-#if DEVELOPMENT_BUILD || UNITY_EDITOR
+#if DEVELOPMENT_BUILD || UNITY_EDITOR || CUCUMBER_CHEATS
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -17,6 +17,7 @@ namespace CucumberClicker.DebugTools
         private const float RowHeight = 110;
         private const float FontSize = 36;
         private const string Title = "Cheats";
+        private const int TestDelaySeconds = 5;
 
         private static readonly Color Cream = new Color(1f, 0.97f, 0.9f);
         private static readonly Color Ink = new Color(0.17f, 0.25f, 0.12f);
@@ -88,6 +89,11 @@ namespace CucumberClicker.DebugTools
 
             BuildRows(BuildScrollContent(card), game);
 
+            RectTransform notify = MakeButton(card, "NotifyButton", $"Send Test Notification ({TestDelaySeconds}s)",
+                UI.UIStyle.Affordable, SendTestNotification);
+            Stretch(notify, new Vector2(30, 0), new Vector2(-30, 0));
+            Dock(notify, 0, 320, 450);
+
             RectTransform finish = MakeButton(card, "FinishButton", "Finish All Fermentation", UI.UIStyle.Affordable, FinishJars);
             Stretch(finish, new Vector2(30, 0), new Vector2(-30, 0));
             Dock(finish, 0, 170, 300);
@@ -105,9 +111,17 @@ namespace CucumberClicker.DebugTools
             titleLabel.text = $"Finished {finished} jar(s)";
         }
 
+        private void SendTestNotification()
+        {
+            FermentationNotifier notifier = FermentationNotifier.Instance;
+            titleLabel.text = notifier != null && notifier.SendTest(TestDelaySeconds)
+                ? $"Notification in {TestDelaySeconds}s"
+                : "Notifications need a phone build";
+        }
+
         private static RectTransform BuildScrollContent(RectTransform card)
         {
-            RectTransform viewport = Stretch(Node("Scroll", card), new Vector2(20, 320), new Vector2(-20, -120));
+            RectTransform viewport = Stretch(Node("Scroll", card), new Vector2(20, 470), new Vector2(-20, -120));
             Image(viewport, Color.clear);
             viewport.gameObject.AddComponent<RectMask2D>();
 

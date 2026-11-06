@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 469c24fdb3bd6431b92cc1465bd9166b, type: 3}
+  m_Name: RemoteConfigDataStoreAsset
+  m_EditorClassIdentifier: Unity.RemoteConfig.Editor::Unity.RemoteConfig.Editor.RemoteConfigDataStore
+  _rsKeyList: "[\n  {\n    \"metadata\": {\n      \"entityId\": \"26ae3bf0-0bb8-4b52-8736-328a0dfb53e0\"\n   
+    },\n    \"rs\": {\n      \"key\": \"halloween_mode\",\n      \"type\": \"bool\",\n     
+    \"value\": false\n    }\n  }\n]"
+  _rsLastCachedKeyList: "[\n  {\n    \"metadata\": {\n      \"entityId\": \"26ae3bf0-0bb8-4b52-8736-328a0dfb53e0\"\n   
+    },\n    \"rs\": {\n      \"key\": \"halloween_mode\",\n      \"type\": \"bool\",\n     
+    \"value\": false\n    }\n  }\n]"
+  _environments: "[\n  {\n    \"projectId\": \"e3d0501f-5f50-430c-8ae1-b0e9efa63e75\",\n   
+    \"name\": \"production\",\n    \"id\": \"f6b74066-d733-434a-aa53-462e99f6a2d4\",\n   
+    \"isDefault\": true,\n    \"createdAt\": \"2026-09-11T06:07:36Z\",\n    \"updatedAt\":
+    \"2026-09-11T06:07:36Z\"\n  },\n  {\n    \"projectId\": \"e3d0501f-5f50-430c-8ae1-b0e9efa63e75\",\n   
+    \"name\": \"alpha-test\",\n    \"id\": \"bcf974da-d12e-47ff-9403-6f9d5211329c\",\n   
+    \"isDefault\": false,\n    \"createdAt\": \"2026-10-30T05:56:44Z\",\n    \"updatedAt\":
+    \"2026-10-30T05:56:44Z\"\n  }\n]"

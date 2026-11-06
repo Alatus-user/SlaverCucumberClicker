@@ -1,4 +1,4 @@
-#if DEVELOPMENT_BUILD || UNITY_EDITOR
+#if DEVELOPMENT_BUILD || UNITY_EDITOR || CUCUMBER_CHEATS
 using System;
 
 namespace CucumberClicker.DebugTools

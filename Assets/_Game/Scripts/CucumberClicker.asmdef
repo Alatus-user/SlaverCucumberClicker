@@ -4,7 +4,15 @@
     "references": [
         "Unity.TextMeshPro",
         "UnityEngine.UI",
-        "Unity.InputSystem"
+        "Unity.InputSystem",
+        "Unity.Notifications.Unified"
     ],
-    "autoReferenced": true
+    "autoReferenced": true,
+    "versionDefines": [
+        {
+            "name": "com.unity.mobile.notifications",
+            "expression": "2.2.0",
+            "define": "MOBILE_NOTIFICATIONS"
+        }
+    ]
 }
